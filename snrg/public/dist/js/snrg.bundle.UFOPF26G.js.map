@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../apps/snrg/snrg/public/js/quick_entry.js"],
-  "sourcesContent": ["frappe.provide('frappe.ui.form');\n\nfrappe.ui.form.LeadQuickEntryForm = frappe.ui.form.CustomerQuickEntryForm;"],
-  "mappings": ";;AAAA,SAAO,QAAQ,gBAAgB;AAE/B,SAAO,GAAG,KAAK,qBAAqB,OAAO,GAAG,KAAK;",
-  "names": []
-}
