@@ -43,8 +43,8 @@
           fieldtype: "Section Break",
           description: this.api_enabled ? __(
             `When you enter a GSTIN, the permanent address linked to it is
-                                autofilled.<br>
-                                Change the {0} to autofill other addresses.`,
+                        autofilled.<br>
+                        Change the {0} to autofill other addresses.`,
             [frappe.meta.get_label("Address", "pincode")]
           ) : "",
           collapsible: 0
@@ -120,6 +120,7 @@
         if (!field.label && fieldname) {
           field.label = frappe.meta.get_label("Address", fieldname);
         }
+        console.log("fields--------------------------------------", fields);
       }
       return fields;
     }
@@ -152,14 +153,6 @@
         ...this.get_contact_fields(),
         ...this.get_address_fields()
       ];
-      if (this.doctype === "Customer") {
-        this.mandatory.push({
-          label: __("Customer POS ID"),
-          fieldname: "customer_pos_id",
-          fieldtype: "Data",
-          hidden: 1
-        });
-      }
       super.render_dialog();
     }
     get_contact_fields() {
@@ -190,15 +183,18 @@
       const doc = super.update_doc();
       doc._address_line1 = doc.address_line1;
       delete doc.address_line1;
+      console.log("update doc---------------------------", doc);
       doc.email_id = doc._email_id;
       doc.mobile_no = doc._mobile_no;
       return doc;
     }
   };
+  console.log("leadquickentryform------------------------------------------", LeadQuickEntryForm);
   frappe.ui.form.LeadQuickEntryForm = LeadQuickEntryForm;
   async function autofill_fields(dialog) {
     const gstin = dialog.doc._gstin;
     const gstin_field = dialog.get_field("_gstin");
+    console.log("dialog box------------------------------------------------", dialog);
     if (!gstin || gstin.length !== 15) {
       const pincode_field = dialog.fields_dict._pincode;
       pincode_field.set_data([]);
@@ -210,6 +206,7 @@
     set_gstin_description(gstin_field, gstin_info2.status);
     map_gstin_info(dialog.doc, gstin_info2);
     dialog.refresh();
+    console.log("gstin_info-----------------------", gstin_info2);
     setup_pincode_field(dialog, gstin_info2);
   }
   function set_gstin_description(gstin_field, status) {
@@ -223,6 +220,7 @@
     if (!gstin_info2.all_addresses)
       return;
     const pincode_field = dialog.fields_dict._pincode;
+    console.log("pincode field------------------------------", pincode_field);
     pincode_field.set_data(
       gstin_info2.all_addresses.map((address) => {
         return {
@@ -232,6 +230,7 @@
         };
       })
     );
+    console.log("after set_");
     pincode_field.df.onchange = () => {
       autofill_address(dialog.doc, gstin_info2);
       dialog.refresh();
@@ -239,7 +238,7 @@
   }
   function get_gstin_info(gstin, throw_error = true) {
     return frappe.call({
-      method: "india_compliance.gst_india.utils.gstin_info.get_gstin_info",
+      method: "apps.india_compliance.india_compliance.gst_india.utils.gstin_info.get_gstin_info",
       args: { gstin, throw_error }
     }).then((r) => r.message);
   }
@@ -254,10 +253,11 @@
   function update_lead_info(doc, gstin_info2) {
     doc.gstin = doc._gstin;
     doc.gst_category = gstin_info2.gst_category;
-    if (!in_list(frappe.boot.gst_lead_types, doc.doctype))
+    if (!in_list(frappe.boot.gst_party_types, doc.doctype))
       return;
     const lead_name_field = `${doc.doctype.toLowerCase()}_name`;
     doc[lead_name_field] = gstin_info2.business_name;
+    console.log("lead name field", lead_name_field);
   }
   function update_address_info(doc, address) {
     if (!address)
@@ -271,6 +271,7 @@
       return;
     const name_field = `${doc.doctype.toLowerCase()}_first_name`;
     doc[name_field] = gstin_info.customer_name;
+    console.log("doc.name_field----------------------------------------", doc[name_field]);
     update_address_info(
       doc,
       all_addresses.find((address) => address.pincode == pincode)
@@ -283,4 +284,4 @@
     return __("Autofill is not supported in sandbox mode");
   }
 })();
-//# sourceMappingURL=snrg.bundle.OXOCXCGH.js.map
+//# sourceMappingURL=snrg.bundle.TSXIHIGW.js.map
