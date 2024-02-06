@@ -122,8 +122,8 @@ class LeadQuickEntryForm extends GSTQuickEntryForm{
             }
             get_mandatory_fields() {
                 var fields = [{
-                    label: __("Customer Name"),
-                    fieldname: "customer_name",
+                    label: __("First Name"),
+                    fieldname: "first_name",
                     fieldtype: "Data",
                     reqd: 1,
                 },
@@ -217,6 +217,7 @@ async function autofill_fields(dialog) {
     const gstin_info = await get_gstin_info(gstin);
     set_gstin_description(gstin_field, gstin_info.status);
     map_gstin_info(dialog.doc, gstin_info);
+    dialog.set_value('_company_name', gstin_info.business_name)
     dialog.refresh();
     console.log("map gstin info-------------------------------------------",map_gstin_info)
     console.log("gstin_info-----------------------",gstin_info)
@@ -282,7 +283,6 @@ function update_lead_info(doc, gstin_info) {
     const lead_name_field = `${doc.doctype.toLowerCase()}_name`;
     doc[lead_name_field] = gstin_info.business_name;
     console.log("lead name field",lead_name_field)
-
 }
 
 function update_address_info(doc, address) {
@@ -297,7 +297,7 @@ function autofill_address(doc, { all_addresses }) {
     const { _pincode: pincode } = doc;
     if (!pincode || pincode.length !== 6 || !all_addresses) return;
 
-    const name_field = `${doc.doctype.toLowerCase()}_first_name`;
+    const name_field = `${doc.doctype.toLowerCase()}_company_name`;
     doc[name_field] = gstin_info.customer_name;
     console.log("doc.name_field----------------------------------------",doc[name_field])
 
