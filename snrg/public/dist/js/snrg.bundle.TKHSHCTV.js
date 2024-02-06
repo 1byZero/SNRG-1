@@ -87,7 +87,7 @@
     }
     get_gstin_field() {
       return [
-        __spreadProps(__spreadValues({}, frappe.meta.get_docfield(this.doctype, "gstin")), {
+        __spreadProps(__spreadValues({}, frappe.meta.get_docfield(this.doctype, "custom_gstin")), {
           label: "GSTIN",
           fieldname: "custom_gstin",
           fieldtype: "Autocomplete",
@@ -189,8 +189,8 @@
   };
   frappe.ui.form.LeadQuickEntryForm = LeadQuickEntryForm;
   async function autofill_fields(dialog) {
-    const gstin = dialog.doc._gstin;
-    const gstin_field = dialog.get_field("_gstin");
+    const gstin = dialog.doc.custom_gstin;
+    const gstin_field = dialog.get_field("custom_gstin");
     if (!gstin || gstin.length !== 15) {
       const pincode_field = dialog.fields_dict._pincode;
       pincode_field.set_data([]);
@@ -274,4 +274,4 @@
     return __("Autofill is not supported in sandbox mode");
   }
 })();
-//# sourceMappingURL=snrg.bundle.LB2PXHEG.js.map
+//# sourceMappingURL=snrg.bundle.TKHSHCTV.js.map
