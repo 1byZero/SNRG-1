@@ -97,10 +97,6 @@
             const d = this.dialog;
             if (this.api_enabled && !gst_settings.sandbox_mode)
               return autofill_fields(d);
-            d.set_value(
-              "gst_category",
-              india_compliance.guess_gst_category(d.doc._gstin, d.doc.country)
-            );
           }
         })
       ];
@@ -108,7 +104,7 @@
     update_doc() {
       const doc = super.update_doc();
       doc.pincode = doc._pincode;
-      doc.gstin = doc._gstin;
+      doc.gstin = doc._custom_gstin;
       return doc;
     }
   };
@@ -245,7 +241,7 @@
     }
   }
   function update_lead_info(doc, gstin_info) {
-    doc.gstin = doc._gstin;
+    doc.gstin = doc.custom_gstin;
     doc.gst_category = gstin_info.gst_category;
     if (!in_list(frappe.boot.gst_party_types, doc.doctype))
       return;
@@ -274,4 +270,4 @@
     return __("Autofill is not supported in sandbox mode");
   }
 })();
-//# sourceMappingURL=snrg.bundle.PL657LBE.js.map
+//# sourceMappingURL=snrg.bundle.VIRT553X.js.map
