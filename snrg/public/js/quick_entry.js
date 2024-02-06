@@ -77,7 +77,7 @@ class GSTQuickEntryForm extends frappe.ui.form.QuickEntryForm {
             {
                 ...frappe.meta.get_docfield(this.doctype, "custom_gstin"),
                 label: "GSTIN",
-                fieldname: "custom_gstin",
+                fieldname: "_custom_gstin",
                 fieldtype: "Autocomplete",
                 description: this.api_enabled ? get_gstin_description() : "",
                 ignore_validation: true,
@@ -197,8 +197,8 @@ frappe.ui.form.LeadQuickEntryForm = LeadQuickEntryForm;
 
 
 async function autofill_fields(dialog) {
-    const gstin = dialog.doc.custom_gstin;
-    const gstin_field = dialog.get_field("custom_gstin");
+    const gstin = dialog.doc._custom_gstin;
+    const gstin_field = dialog.get_field("_custom_gstin");
 
     if (!gstin || gstin.length !== 15) {
         const pincode_field = dialog.fields_dict._pincode;
