@@ -131,6 +131,17 @@ app_include_js = "snrg.bundle.js"
 # 		"on_trash": "method"
 # 	}
 # }
+doc_events = {
+    "Customer": {
+        "before_save": "snrg.snrg.doctype.counter.counter.to_insert_new_document",
+    },
+    "Lead": {
+        "before_save": "snrg.snrg.doctype.counter.counter.to_insert_new_document",
+    },
+    "Secondary Customer": {
+        "before_save": "snrg.snrg.doctype.counter.counter.to_insert_new_document",
+    }
+}
 
 # Scheduled Tasks
 # ---------------

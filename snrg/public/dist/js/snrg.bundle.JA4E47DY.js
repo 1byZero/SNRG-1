@@ -206,6 +206,7 @@
     set_gstin_description(gstin_field, gstin_info2.status);
     map_gstin_info(dialog.doc, gstin_info2);
     dialog.refresh();
+    console.log("map gstin info-------------------------------------------", map_gstin_info);
     console.log("gstin_info-----------------------", gstin_info2);
     setup_pincode_field(dialog, gstin_info2);
   }
@@ -230,7 +231,7 @@
         };
       })
     );
-    console.log("after set_");
+    console.log("after set_data --------------", pincode_field);
     pincode_field.df.onchange = () => {
       autofill_address(dialog.doc, gstin_info2);
       dialog.refresh();
@@ -238,7 +239,7 @@
   }
   function get_gstin_info(gstin, throw_error = true) {
     return frappe.call({
-      method: "apps.india_compliance.india_compliance.gst_india.utils.gstin_info.get_gstin_info",
+      method: "india_compliance.gst_india.utils.gstin_info.get_gstin_info",
       args: { gstin, throw_error }
     }).then((r) => r.message);
   }
@@ -284,4 +285,4 @@
     return __("Autofill is not supported in sandbox mode");
   }
 })();
-//# sourceMappingURL=snrg.bundle.TSXIHIGW.js.map
+//# sourceMappingURL=snrg.bundle.JA4E47DY.js.map
