@@ -7,7 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "counter_name",
-  "mobile_no"
+  "mobile_no",
+  "customer_name"
  ],
  "fields": [
   {
@@ -20,11 +21,16 @@
    "fieldname": "mobile_no",
    "fieldtype": "Data",
    "label": "Mobile Number"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "Customer Name"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-05 17:08:17.697213",
+ "modified": "2024-02-06 13:51:34.983584",
  "modified_by": "Administrator",
  "module": "SNRG",
  "name": "Counter",
@@ -44,7 +50,10 @@
    "write": 1
   }
  ],
+ "search_fields": "mobile_no",
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "customer_name"
 }

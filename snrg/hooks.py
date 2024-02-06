@@ -133,13 +133,13 @@ app_include_js = "snrg.bundle.js"
 # }
 doc_events = {
     "Customer": {
-        "before_save": "snrg.snrg.doctype.counter.counter.to_insert_new_document",
+        "before_save": "snrg.snrg.doctype.counter.counter.insert_or_update_document",
     },
     "Lead": {
-        "before_save": "snrg.snrg.doctype.counter.counter.to_insert_new_document",
+        "before_save": "snrg.snrg.doctype.counter.counter.insert_or_update_document",
     },
     "Secondary Customer": {
-        "before_save": "snrg.snrg.doctype.counter.counter.to_insert_new_document",
+        "before_save": "snrg.snrg.doctype.counter.counter.insert_or_update_document",
     }
 }
 

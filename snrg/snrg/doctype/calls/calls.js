@@ -17,6 +17,12 @@ frappe.ui.form.on("Calls", {
                     if(response.message[0].company_name){
                         frm.set_value('company_name', response.message[0].company_name) 
                     }
+                    else if(response.message[0].customer_name){
+                        frm.set_value('company_name', response.message[0].customer_name)
+                    }
+                    else if(response.message[0].first_name){
+                        frm.set_value('company_name', response.message[0].first_name)
+                    }
                     if(response.message[0].mobile_no != null)
                         frm.set_value('mobile_number', response.message[0].mobile_no)
                 }
