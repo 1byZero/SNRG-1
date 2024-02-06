@@ -87,7 +87,7 @@
     }
     get_gstin_field() {
       return [
-        __spreadProps(__spreadValues({}, frappe.meta.get_docfield(this.doctype, "custom_gstin")), {
+        __spreadProps(__spreadValues({}, frappe.meta.get_docfield(this.doctype, "gstin")), {
           label: "GSTIN",
           fieldname: "custom_gstin",
           fieldtype: "Autocomplete",
@@ -274,4 +274,4 @@
     return __("Autofill is not supported in sandbox mode");
   }
 })();
-//# sourceMappingURL=snrg.bundle.Z4KGQ5IN.js.map
+//# sourceMappingURL=snrg.bundle.LB2PXHEG.js.map

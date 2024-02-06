@@ -75,7 +75,7 @@ class GSTQuickEntryForm extends frappe.ui.form.QuickEntryForm {
     get_gstin_field() {
         return [
             {
-                ...frappe.meta.get_docfield(this.doctype, "custom_gstin"),
+                ...frappe.meta.get_docfield(this.doctype, "gstin"),
                 label: "GSTIN",
                 fieldname: "custom_gstin",
                 fieldtype: "Autocomplete",
