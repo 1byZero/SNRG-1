@@ -205,7 +205,7 @@
     const gstin_info2 = await get_gstin_info(gstin);
     set_gstin_description(gstin_field, gstin_info2.status);
     map_gstin_info(dialog.doc, gstin_info2);
-    dialog.set_value("_company_name", gstin_info2.business_name);
+    dialog.set_value("company_name", gstin_info2.business_name);
     dialog.refresh();
     console.log("map gstin info-------------------------------------------", map_gstin_info);
     console.log("gstin_info-----------------------", gstin_info2);
@@ -286,4 +286,4 @@
     return __("Autofill is not supported in sandbox mode");
   }
 })();
-//# sourceMappingURL=snrg.bundle.WGDEU4EN.js.map
+//# sourceMappingURL=snrg.bundle.DVFRYC3E.js.map

@@ -217,7 +217,7 @@ async function autofill_fields(dialog) {
     const gstin_info = await get_gstin_info(gstin);
     set_gstin_description(gstin_field, gstin_info.status);
     map_gstin_info(dialog.doc, gstin_info);
-    dialog.set_value('_company_name', gstin_info.business_name)
+    dialog.set_value('company_name', gstin_info.business_name)
     dialog.refresh();
     console.log("map gstin info-------------------------------------------",map_gstin_info)
     console.log("gstin_info-----------------------",gstin_info)
