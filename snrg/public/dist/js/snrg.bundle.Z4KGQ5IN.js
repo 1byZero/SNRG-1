@@ -87,9 +87,9 @@
     }
     get_gstin_field() {
       return [
-        __spreadProps(__spreadValues({}, frappe.meta.get_docfield(this.doctype, "gstin")), {
+        __spreadProps(__spreadValues({}, frappe.meta.get_docfield(this.doctype, "custom_gstin")), {
           label: "GSTIN",
-          fieldname: "_gstin",
+          fieldname: "custom_gstin",
           fieldtype: "Autocomplete",
           description: this.api_enabled ? get_gstin_description() : "",
           ignore_validation: true,
@@ -120,7 +120,6 @@
         if (!field.label && fieldname) {
           field.label = frappe.meta.get_label("Address", fieldname);
         }
-        console.log("fields--------------------------------------", fields);
       }
       return fields;
     }
@@ -183,18 +182,15 @@
       const doc = super.update_doc();
       doc._address_line1 = doc.address_line1;
       delete doc.address_line1;
-      console.log("update doc---------------------------", doc);
       doc.email_id = doc._email_id;
       doc.mobile_no = doc._mobile_no;
       return doc;
     }
   };
-  console.log("leadquickentryform------------------------------------------", LeadQuickEntryForm);
   frappe.ui.form.LeadQuickEntryForm = LeadQuickEntryForm;
   async function autofill_fields(dialog) {
     const gstin = dialog.doc._gstin;
     const gstin_field = dialog.get_field("_gstin");
-    console.log("dialog box------------------------------------------------", dialog);
     if (!gstin || gstin.length !== 15) {
       const pincode_field = dialog.fields_dict._pincode;
       pincode_field.set_data([]);
@@ -202,14 +198,12 @@
       gstin_field.set_description(get_gstin_description());
       return;
     }
-    const gstin_info2 = await get_gstin_info(gstin);
-    set_gstin_description(gstin_field, gstin_info2.status);
-    map_gstin_info(dialog.doc, gstin_info2);
-    dialog.set_value("company_name", gstin_info2.business_name);
+    const gstin_info = await get_gstin_info(gstin);
+    set_gstin_description(gstin_field, gstin_info.status);
+    map_gstin_info(dialog.doc, gstin_info);
+    dialog.set_value("company_name", gstin_info.business_name);
     dialog.refresh();
-    console.log("map gstin info-------------------------------------------", map_gstin_info);
-    console.log("gstin_info-----------------------", gstin_info2);
-    setup_pincode_field(dialog, gstin_info2);
+    setup_pincode_field(dialog, gstin_info);
   }
   function set_gstin_description(gstin_field, status) {
     if (!status) {
@@ -218,13 +212,12 @@
     }
     gstin_field.set_description(india_compliance.get_gstin_status_desc(status));
   }
-  function setup_pincode_field(dialog, gstin_info2) {
-    if (!gstin_info2.all_addresses)
+  function setup_pincode_field(dialog, gstin_info) {
+    if (!gstin_info.all_addresses)
       return;
     const pincode_field = dialog.fields_dict._pincode;
-    console.log("pincode field------------------------------", pincode_field);
     pincode_field.set_data(
-      gstin_info2.all_addresses.map((address) => {
+      gstin_info.all_addresses.map((address) => {
         return {
           label: address.pincode,
           value: address.pincode,
@@ -232,9 +225,8 @@
         };
       })
     );
-    console.log("after set_data --------------", pincode_field);
     pincode_field.df.onchange = () => {
-      autofill_address(dialog.doc, gstin_info2);
+      autofill_address(dialog.doc, gstin_info);
       dialog.refresh();
     };
   }
@@ -244,22 +236,21 @@
       args: { gstin, throw_error }
     }).then((r) => r.message);
   }
-  function map_gstin_info(doc, gstin_info2) {
-    if (!gstin_info2)
+  function map_gstin_info(doc, gstin_info) {
+    if (!gstin_info)
       return;
-    update_lead_info(doc, gstin_info2);
-    if (gstin_info2.permanent_address) {
-      update_address_info(doc, gstin_info2.permanent_address);
+    update_lead_info(doc, gstin_info);
+    if (gstin_info.permanent_address) {
+      update_address_info(doc, gstin_info.permanent_address);
     }
   }
-  function update_lead_info(doc, gstin_info2) {
+  function update_lead_info(doc, gstin_info) {
     doc.gstin = doc._gstin;
-    doc.gst_category = gstin_info2.gst_category;
+    doc.gst_category = gstin_info.gst_category;
     if (!in_list(frappe.boot.gst_party_types, doc.doctype))
       return;
     const lead_name_field = `${doc.doctype.toLowerCase()}_name`;
-    doc[lead_name_field] = gstin_info2.business_name;
-    console.log("lead name field", lead_name_field);
+    doc[lead_name_field] = gstin_info.business_name;
   }
   function update_address_info(doc, address) {
     if (!address)
@@ -271,9 +262,6 @@
     const { _pincode: pincode } = doc;
     if (!pincode || pincode.length !== 6 || !all_addresses)
       return;
-    const name_field = `${doc.doctype.toLowerCase()}_company_name`;
-    doc[name_field] = gstin_info.customer_name;
-    console.log("doc.name_field----------------------------------------", doc[name_field]);
     update_address_info(
       doc,
       all_addresses.find((address) => address.pincode == pincode)
@@ -286,4 +274,4 @@
     return __("Autofill is not supported in sandbox mode");
   }
 })();
-//# sourceMappingURL=snrg.bundle.DVFRYC3E.js.map
+//# sourceMappingURL=snrg.bundle.Z4KGQ5IN.js.map

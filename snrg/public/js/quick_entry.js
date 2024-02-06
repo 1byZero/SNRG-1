@@ -75,9 +75,9 @@ class GSTQuickEntryForm extends frappe.ui.form.QuickEntryForm {
     get_gstin_field() {
         return [
             {
-                ...frappe.meta.get_docfield(this.doctype, "gstin"),
+                ...frappe.meta.get_docfield(this.doctype, "custom_gstin"),
                 label: "GSTIN",
-                fieldname: "_gstin",
+                fieldname: "custom_gstin",
                 fieldtype: "Autocomplete",
                 description: this.api_enabled ? get_gstin_description() : "",
                 ignore_validation: true,
@@ -115,7 +115,6 @@ class LeadQuickEntryForm extends GSTQuickEntryForm{
                     if (!field.label && fieldname) {
                         field.label = frappe.meta.get_label("Address", fieldname);
                     }
-                    console.log("fields--------------------------------------",fields)
                 }
         
                 return fields;
@@ -185,7 +184,6 @@ class LeadQuickEntryForm extends GSTQuickEntryForm{
                 // to prevent clash with ERPNext
                 doc._address_line1 = doc.address_line1;
                 delete doc.address_line1;
-                console.log("update doc---------------------------", doc)
                 // these fields were suffixed with _ to prevent them from being read only
                 doc.email_id = doc._email_id;
                 doc.mobile_no = doc._mobile_no;
@@ -194,8 +192,6 @@ class LeadQuickEntryForm extends GSTQuickEntryForm{
             }
         
 }
-    
-console.log("leadquickentryform------------------------------------------",LeadQuickEntryForm)
 
 frappe.ui.form.LeadQuickEntryForm = LeadQuickEntryForm;
 
@@ -203,7 +199,6 @@ frappe.ui.form.LeadQuickEntryForm = LeadQuickEntryForm;
 async function autofill_fields(dialog) {
     const gstin = dialog.doc._gstin;
     const gstin_field = dialog.get_field("_gstin");
-    console.log("dialog box------------------------------------------------",dialog)
 
     if (!gstin || gstin.length !== 15) {
         const pincode_field = dialog.fields_dict._pincode;
@@ -219,8 +214,6 @@ async function autofill_fields(dialog) {
     map_gstin_info(dialog.doc, gstin_info);
     dialog.set_value('company_name', gstin_info.business_name)
     dialog.refresh();
-    console.log("map gstin info-------------------------------------------",map_gstin_info)
-    console.log("gstin_info-----------------------",gstin_info)
 
     setup_pincode_field(dialog, gstin_info);
 }
@@ -238,7 +231,6 @@ function setup_pincode_field(dialog, gstin_info) {
     if (!gstin_info.all_addresses) return;
 
     const pincode_field = dialog.fields_dict._pincode;
-    console.log("pincode field------------------------------",pincode_field)
     pincode_field.set_data(
         gstin_info.all_addresses.map(address => {
             return {
@@ -248,7 +240,6 @@ function setup_pincode_field(dialog, gstin_info) {
             };
         })
     );
-        console.log("after set_data --------------", pincode_field)
     pincode_field.df.onchange = () => {
         autofill_address(dialog.doc, gstin_info);
         dialog.refresh();
@@ -282,7 +273,6 @@ function update_lead_info(doc, gstin_info) {
 
     const lead_name_field = `${doc.doctype.toLowerCase()}_name`;
     doc[lead_name_field] = gstin_info.business_name;
-    console.log("lead name field",lead_name_field)
 }
 
 function update_address_info(doc, address) {
@@ -296,10 +286,6 @@ function update_address_info(doc, address) {
 function autofill_address(doc, { all_addresses }) {
     const { _pincode: pincode } = doc;
     if (!pincode || pincode.length !== 6 || !all_addresses) return;
-
-    const name_field = `${doc.doctype.toLowerCase()}_company_name`;
-    doc[name_field] = gstin_info.customer_name;
-    console.log("doc.name_field----------------------------------------",doc[name_field])
 
     update_address_info(
         doc,
