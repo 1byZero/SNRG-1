@@ -208,6 +208,7 @@ async function autofill_fields(dialog) {
     set_gstin_description(gstin_field, gstin_info.status);
     map_gstin_info(dialog.doc, gstin_info);
     dialog.set_value('company_name', gstin_info.business_name)
+    console.log(gstin_info)
     dialog.refresh();
 
     setup_pincode_field(dialog, gstin_info);

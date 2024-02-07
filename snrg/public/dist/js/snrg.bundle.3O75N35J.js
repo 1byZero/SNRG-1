@@ -198,6 +198,7 @@
     set_gstin_description(gstin_field, gstin_info.status);
     map_gstin_info(dialog.doc, gstin_info);
     dialog.set_value("company_name", gstin_info.business_name);
+    console.log(gstin_info);
     dialog.refresh();
     setup_pincode_field(dialog, gstin_info);
   }
@@ -270,4 +271,4 @@
     return __("Autofill is not supported in sandbox mode");
   }
 })();
-//# sourceMappingURL=snrg.bundle.WRCQMPJB.js.map
+//# sourceMappingURL=snrg.bundle.3O75N35J.js.map
