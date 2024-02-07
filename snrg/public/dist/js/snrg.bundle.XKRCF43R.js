@@ -104,7 +104,7 @@
     update_doc() {
       const doc = super.update_doc();
       doc.pincode = doc._pincode;
-      doc.gstin = doc._custom_gstin;
+      doc.custom_gstin = doc._custom_gstin;
       return doc;
     }
   };
@@ -270,4 +270,4 @@
     return __("Autofill is not supported in sandbox mode");
   }
 })();
-//# sourceMappingURL=snrg.bundle.VIRT553X.js.map
+//# sourceMappingURL=snrg.bundle.XKRCF43R.js.map
