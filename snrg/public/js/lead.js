@@ -17,10 +17,10 @@ frappe.ui.form.on("Lead", {
         map_gstin_info(frm, custom_gstin_info)
 
 
-        function get_custom_gstin_info(custom_gstin, throw_error = true) {
+        function get_custom_gstin_info(gstin, throw_error = true) {
             return frappe.call({
                 method: "india_compliance.gst_india.utils.gstin_info.get_gstin_info",
-                args: {custom_gstin, throw_error}
+                args: {gstin, throw_error}
             })
             .then(r => r.message);
         }
