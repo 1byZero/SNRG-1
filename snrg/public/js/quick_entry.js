@@ -261,7 +261,7 @@ function map_gstin_info(doc, gstin_info) {
 }
 
 function update_lead_info(doc, gstin_info) {
-    doc.gstin = doc.custom_gstin;
+    doc.gstin = doc._custom_gstin;
     doc.gst_category = gstin_info.gst_category;
 
     if (!in_list(frappe.boot.gst_party_types, doc.doctype)) return;

@@ -241,7 +241,7 @@
     }
   }
   function update_lead_info(doc, gstin_info) {
-    doc.gstin = doc.custom_gstin;
+    doc.gstin = doc._custom_gstin;
     doc.gst_category = gstin_info.gst_category;
     if (!in_list(frappe.boot.gst_party_types, doc.doctype))
       return;
@@ -270,4 +270,4 @@
     return __("Autofill is not supported in sandbox mode");
   }
 })();
-//# sourceMappingURL=snrg.bundle.XKRCF43R.js.map
+//# sourceMappingURL=snrg.bundle.WRCQMPJB.js.map
