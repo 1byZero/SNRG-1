@@ -13,8 +13,11 @@ frappe.ui.form.on("Lead", {
         }
 
         const custom_gstin_info = get_custom_gstin_info(custom_gstin)
+        console.log(custom_gstin_info)
         set_custom_gstin_description(custom_gstin_field, custom_gstin_info.status);
-        map_gstin_info(frm, custom_gstin_info)
+        console.log(set_custom_gstin_description)
+        map_custom_gstin_info(frm, custom_gstin_info)
+        console.log(map_custom_gstin_info)
 
 
         function get_custom_gstin_info(gstin, throw_error = true) {
@@ -29,10 +32,10 @@ frappe.ui.form.on("Lead", {
             gstin_field.set_description(india_compliance.get_gstin_status_desc(gstin_status));
         }
 
-        function map_gstin_info(frm, custom_gstin_info) {
+        function map_custom_gstin_info(frm, custom_gstin_info) {
             frm.set_value("company_name", custom_gstin_info.business_name)
-            frm.set_value("state", custom_gstin_info.all_address.state)
-            frm.set_value("city", custom_gstin_info.all_address.city)
+            frm.set_value("state", custom_gstin_info.permanent_address.state)
+            frm.set_value("city", custom_gstin_info.permanent_address.city)
         }
 
     }
