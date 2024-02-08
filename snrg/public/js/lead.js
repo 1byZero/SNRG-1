@@ -8,6 +8,7 @@ frappe.ui.form.on("Lead", {
         console.log("gstin_field======", custom_gstin_field)
 
         const gstin_status = get_gstin_status(custom_gstin)
+        console.log("gstin_status ===================================", gstin_status)
 
         set_custom_gstin_description(custom_gstin_field, gstin_status.status);
         console.log("set_custom_description===========".set_custom_gstin_description)
