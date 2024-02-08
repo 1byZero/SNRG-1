@@ -7,26 +7,24 @@ frappe.ui.form.on("Lead", {
         console.log("gstin",custom_gstin)
         console.log("gstin_field======", custom_gstin_field)
 
-        const gstin_status = get_gstin_status(custom_gstin)
+        const gstin_status = this.get_gstin_status(custom_gstin)
         console.log("gstin_status ===================================", gstin_status)
 
-        set_custom_gstin_description(custom_gstin_field, gstin_status.status);
+        this.set_custom_gstin_description(custom_gstin_field, gstin_status.status);
         console.log("set_custom_description===========".set_custom_gstin_description)
 
-        
-
-        
+           
+    },
+    get_gstin_status(gstin) {
+        return frappe
+            .call({
+                method: "india_compliance.gst_india.doctype.gstin.gstin.get_gstin_status",
+                args: {gstin}
+            })
+            .then(r => r.message);
+    },
+    set_custom_gstin_description(gstin_field, status) {
+        console.log("status====================================================================",status)
+        gstin_field.set_description(india_compliance.get_gstin_status_desc(status));
     }
 })
-function get_gstin_status(gstin) {
-    return frappe
-        .call({
-            method: "india_compliance.gst_india.doctype.gstin.gstin.get_gstin_status",
-            args: {gstin}
-        })
-        .then(r => r.message);
-}
-function set_custom_gstin_description(gstin_field, status) {
-    console.log("status====================================================================",status)
-    gstin_field.set_description(india_compliance.get_gstin_status_desc(status));
-}
