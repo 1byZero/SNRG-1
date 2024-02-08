@@ -1,7 +1,6 @@
 
 frappe.ui.form.on("Lead", {
     custom_gstin:function(frm) {
-        frm.Controller = new LeadEntryForm(frm)
         
         const custom_gstin = frm.doc.custom_gstin
         const custom_gstin_field = frm.get_field("custom_gstin")
