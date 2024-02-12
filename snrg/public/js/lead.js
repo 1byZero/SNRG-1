@@ -24,15 +24,20 @@ frappe.ui.form.on("Lead", {
         
         const custom_gstin = frm.doc.custom_gstin
         const custom_gstin_field = frm.get_field("custom_gstin")
+        const gstin_status = ""
         console.log("gstin",custom_gstin)
         console.log("gstin_field======", custom_gstin_field)
         // console.log(get_gstin_status(custom_gstin));
 
-        const gstin_status = get_gstin_status(custom_gstin)
-        console.log("gstin_status ===================================", gstin_status)
+        if(custom_gstin) {
+            const gstin_status = get_gstin_status(custom_gstin)
+            console.log("gstin_status ===================================", gstin_status)
+        }
 
-        set_custom_gstin_description(custom_gstin_field, gstin_status);
-        console.log("set_custom_description===========",set_custom_gstin_description)
+        if(gstin_status != "") {
+            set_custom_gstin_description(custom_gstin_field, gstin_status);
+            console.log("set_custom_description===========",set_custom_gstin_description)
+        }
 
       
     },

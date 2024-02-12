@@ -293,12 +293,17 @@
       }
       const custom_gstin = frm.doc.custom_gstin;
       const custom_gstin_field = frm.get_field("custom_gstin");
+      const gstin_status = "";
       console.log("gstin", custom_gstin);
       console.log("gstin_field======", custom_gstin_field);
-      const gstin_status = get_gstin_status(custom_gstin);
-      console.log("gstin_status ===================================", gstin_status);
-      set_custom_gstin_description(custom_gstin_field, gstin_status);
-      console.log("set_custom_description===========", set_custom_gstin_description);
+      if (custom_gstin) {
+        const gstin_status2 = get_gstin_status(custom_gstin);
+        console.log("gstin_status ===================================", gstin_status2);
+      }
+      if (gstin_status != "") {
+        set_custom_gstin_description(custom_gstin_field, gstin_status);
+        console.log("set_custom_description===========", set_custom_gstin_description);
+      }
     },
     refresh(frm) {
       if (!frm.is_new()) {
@@ -314,4 +319,4 @@
     }
   });
 })();
-//# sourceMappingURL=snrg.bundle.NM7BR6HK.js.map
+//# sourceMappingURL=snrg.bundle.ESMFPKMB.js.map
