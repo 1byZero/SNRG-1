@@ -2,7 +2,7 @@
 frappe.ui.form.on("Lead", {
     custom_gstin:function(frm) {
         function get_gstin_status (gstin) {
-            let status;
+            let status = "";
             frappe
                 .call({
                     method: "india_compliance.gst_india.doctype.gstin.gstin.get_gstin_status",
@@ -10,6 +10,7 @@ frappe.ui.form.on("Lead", {
                     callback:(r) => {
                         console.log("R. message =========================",r.message)
                         status = r.message.status
+                        console.log("callback status===================", status)
                         
                     }
                 })

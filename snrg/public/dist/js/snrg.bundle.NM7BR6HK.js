@@ -275,13 +275,14 @@
   frappe.ui.form.on("Lead", {
     custom_gstin: function(frm) {
       function get_gstin_status(gstin) {
-        let status;
+        let status = "";
         frappe.call({
           method: "india_compliance.gst_india.doctype.gstin.gstin.get_gstin_status",
           args: { gstin },
           callback: (r) => {
             console.log("R. message =========================", r.message);
             status = r.message.status;
+            console.log("callback status===================", status);
           }
         });
         return status;
@@ -313,4 +314,4 @@
     }
   });
 })();
-//# sourceMappingURL=snrg.bundle.ZV4SB6O7.js.map
+//# sourceMappingURL=snrg.bundle.NM7BR6HK.js.map
