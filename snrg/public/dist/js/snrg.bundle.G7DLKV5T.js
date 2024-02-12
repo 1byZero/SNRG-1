@@ -283,7 +283,7 @@
             console.log("R. message =========================", r.message);
             status = r.message.status;
             console.log("callback status===================", status);
-            return status;
+            return r.message;
           }
         });
       }
@@ -301,7 +301,7 @@
         console.log("gstin_status ===================================", gstin_status2);
       }
       if (gstin_status != "") {
-        set_custom_gstin_description(custom_gstin_field, gstin_status);
+        set_custom_gstin_description(custom_gstin_field, gstin_status.status);
         console.log("set_custom_description===========", set_custom_gstin_description);
       }
     },
@@ -319,4 +319,4 @@
     }
   });
 })();
-//# sourceMappingURL=snrg.bundle.SPYPTYI2.js.map
+//# sourceMappingURL=snrg.bundle.G7DLKV5T.js.map
