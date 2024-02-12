@@ -11,10 +11,9 @@ frappe.ui.form.on("Lead", {
                         console.log("R. message =========================",r.message)
                         status = r.message.status
                         console.log("callback status===================", status)
-                        
+                        return status
                     }
                 })
-                return status
         }
 
         function set_custom_gstin_description (gstin_field, status) {
@@ -38,7 +37,6 @@ frappe.ui.form.on("Lead", {
             set_custom_gstin_description(custom_gstin_field, gstin_status);
             console.log("set_custom_description===========",set_custom_gstin_description)
         }
-
       
     },
     refresh(frm) {

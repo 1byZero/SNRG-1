@@ -283,9 +283,9 @@
             console.log("R. message =========================", r.message);
             status = r.message.status;
             console.log("callback status===================", status);
+            return status;
           }
         });
-        return status;
       }
       function set_custom_gstin_description(gstin_field, status) {
         console.log("status====================================================================", status);
@@ -319,4 +319,4 @@
     }
   });
 })();
-//# sourceMappingURL=snrg.bundle.ESMFPKMB.js.map
+//# sourceMappingURL=snrg.bundle.SPYPTYI2.js.map
