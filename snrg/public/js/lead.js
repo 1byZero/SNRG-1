@@ -7,6 +7,7 @@ frappe.ui.form.on("Lead", {
                 .call({
                     method: "india_compliance.gst_india.doctype.gstin.gstin.get_gstin_status",
                     args: {gstin},
+                    async:false,
                     callback:(r) => {
                         console.log("R. message =========================",r.message)
                         const  status = r.message.status

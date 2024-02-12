@@ -278,6 +278,7 @@
         frappe.call({
           method: "india_compliance.gst_india.doctype.gstin.gstin.get_gstin_status",
           args: { gstin },
+          async: false,
           callback: (r) => {
             console.log("R. message =========================", r.message);
             const status = r.message.status;
@@ -318,4 +319,4 @@
     }
   });
 })();
-//# sourceMappingURL=snrg.bundle.RZVJODX5.js.map
+//# sourceMappingURL=snrg.bundle.YVPWC74G.js.map
