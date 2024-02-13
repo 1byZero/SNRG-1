@@ -292,12 +292,12 @@
             const status = r.message.status;
             console.log("callback status===================", status);
             set_custom_gstin_description(gstin_field, status);
+            function set_custom_gstin_description(gstin_field2, status2) {
+              console.log("status====================================================================", status2);
+              gstin_field2.set_description(india_compliance.get_gstin_status_desc(status2));
+            }
           }
         });
-      }
-      function set_custom_gstin_description(gstin_field, status) {
-        console.log("status====================================================================", status);
-        gstin_field.set_description(india_compliance.get_gstin_status_desc(status));
       }
     },
     refresh(frm) {
@@ -314,4 +314,4 @@
     }
   });
 })();
-//# sourceMappingURL=snrg.bundle.KMTQP6DF.js.map
+//# sourceMappingURL=snrg.bundle.GDN5DQHH.js.map

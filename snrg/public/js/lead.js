@@ -59,14 +59,15 @@ frappe.ui.form.on("Lead", {
                             const  status = r.message.status
                             console.log("callback status===================", status)
                             set_custom_gstin_description(gstin_field, status)
+
+                            function set_custom_gstin_description (gstin_field, status) {
+                                console.log("status====================================================================",status)
+                                gstin_field.set_description(india_compliance.get_gstin_status_desc(status));
+                            }
                         }
                     })
             }
 
-        function set_custom_gstin_description (gstin_field, status) {
-            console.log("status====================================================================",status)
-            gstin_field.set_description(india_compliance.get_gstin_status_desc(status));
-        }
       
     },
     
