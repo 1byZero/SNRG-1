@@ -274,31 +274,22 @@
   // ../snrg/snrg/public/js/lead.js
   frappe.ui.form.on("Lead", {
     custom_gstin: function(frm) {
-      const custom_gstin = frm.doc.custom_gstin;
-      const custom_gstin_field = frm.get_field("custom_gstin");
+      const gstin = frm.doc.custom_gstin;
+      const gstin_field = frm.get_field("custom_gstin");
       const gstin_status = "";
       console.log("gstin", custom_gstin);
       console.log("gstin_field======", custom_gstin_field);
-      if (custom_gstin) {
-        const gstin_status2 = get_gstin_status(custom_gstin, custom_gstin_field);
-        console.log("gstin_status ===================================", gstin_status2);
-      }
-      function get_gstin_status(gstin, gstin_field) {
-        frappe.call({
-          method: "india_compliance.gst_india.doctype.gstin.gstin.get_gstin_status",
-          args: { gstin },
-          callback: (r) => {
-            console.log("R. message =========================", r.message);
-            const status = r.message.status;
-            console.log("callback status===================", status);
-            set_custom_gstin_description(gstin_field, status);
-            function set_custom_gstin_description(gstin_field2, status2) {
-              console.log("status====================================================================", status2);
-              gstin_field2.set_description(india_compliance.get_gstin_status_desc(status2));
-            }
-          }
-        });
-      }
+      frappe.call({
+        method: "india_compliance.gst_india.doctype.gstin.gstin.get_gstin_status",
+        args: { gstin },
+        callback: (r) => {
+          console.log("R. message =========================", r.message);
+          const status = r.message.status;
+          console.log("callback status===================", status);
+          console.log("status====================================================================", status);
+          gstin_field.set_description(india_compliance.get_gstin_status_desc(status));
+        }
+      });
     },
     refresh(frm) {
       if (!frm.is_new()) {
@@ -314,4 +305,4 @@
     }
   });
 })();
-//# sourceMappingURL=snrg.bundle.GDN5DQHH.js.map
+//# sourceMappingURL=snrg.bundle.WF5DULKL.js.map
