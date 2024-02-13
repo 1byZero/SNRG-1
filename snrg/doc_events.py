@@ -73,23 +73,25 @@ def _make_customer(source_name, target_doc=None, ignore_permissions=False):
 def validate_gstin(self, method):
     gstin = ""
     doctype = ""
-    
+    gstin_exists = False
     if self.doctype == "Lead":
         gstin = self.custom_gstin
         doctype = self.doctype
 
-        gstin_exists = frappe.db.exists(doctype, {
-            "custom_gstin": gstin
-        })
+        if gstin:
+            gstin_exists = frappe.db.exists(doctype, {
+                "custom_gstin": gstin
+            })
 
         if gstin_exists: frappe.throw("The GSTIN Number that you are entered is already exists in {0}".format(doctype))
     else:
         gstin = self.gstin
         doctype = self.doctype
 
-        gstin_exists = frappe.db.exists(doctype, {
-            "gstin": gstin
-        })
+        if gstin:
+            gstin_exists = frappe.db.exists(doctype, {
+                "gstin": gstin
+            })
 
         if gstin_exists: frappe.throw("The GSTIN Number that you are entered is already exists in {0}".format(doctype))
     
