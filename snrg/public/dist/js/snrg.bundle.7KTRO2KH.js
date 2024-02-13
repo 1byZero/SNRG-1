@@ -285,12 +285,15 @@
         }
       });
     },
+    onload_post_render(frm) {
+      frm.remove_custom_button(__("Customer"), "Create");
+    },
     refresh(frm) {
       if (!frm.is_new()) {
         frm.add_custom_button(__("Secondary Customer"), make_secondary_customer, __("Create"));
+        frm.add_custom_button(__("Create Customer"), make_customer, __("Create"));
       }
       function make_secondary_customer() {
-        console.log("Secondary Customer");
         frappe.model.open_mapped_doc({
           method: "snrg.doc_events.make_secondary_customer",
           frm: cur_frm
@@ -298,5 +301,11 @@
       }
     }
   });
+  var make_customer = function() {
+    frappe.model.open_mapped_doc({
+      method: "snrg.doc_events.make_customer",
+      frm: cur_frm
+    });
+  };
 })();
-//# sourceMappingURL=snrg.bundle.DEQIF7D4.js.map
+//# sourceMappingURL=snrg.bundle.7KTRO2KH.js.map
