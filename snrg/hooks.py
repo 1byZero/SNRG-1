@@ -134,13 +134,18 @@ doctype_js = {"Lead" : "public/js/lead.js"}
 doc_events = {
     "Customer": {
         "before_save": "snrg.snrg.doctype.counter.counter.insert_or_update_document",
+        "before_save": "snrg.doc_events.validate_gstin",
     },
     "Lead": {
         "before_save": "snrg.snrg.doctype.counter.counter.insert_or_update_document",
+        "before_save": "snrg.doc_events.validate_gstin",
     },
     "Secondary Customer": {
         "before_save": "snrg.snrg.doctype.counter.counter.insert_or_update_document",
-    }
+    },
+    "Supplier": {
+        "before_save": "snrg.doc_events.validate_gstin",
+    },
 }
 
 # Scheduled Tasks
