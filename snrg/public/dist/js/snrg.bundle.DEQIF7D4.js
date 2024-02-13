@@ -276,17 +276,11 @@
     custom_gstin: function(frm) {
       const gstin = frm.doc.custom_gstin;
       const gstin_field = frm.get_field("custom_gstin");
-      const gstin_status = "";
-      console.log("gstin", custom_gstin);
-      console.log("gstin_field======", custom_gstin_field);
       frappe.call({
         method: "india_compliance.gst_india.doctype.gstin.gstin.get_gstin_status",
         args: { gstin },
         callback: (r) => {
-          console.log("R. message =========================", r.message);
           const status = r.message.status;
-          console.log("callback status===================", status);
-          console.log("status====================================================================", status);
           gstin_field.set_description(india_compliance.get_gstin_status_desc(status));
         }
       });
@@ -305,4 +299,4 @@
     }
   });
 })();
-//# sourceMappingURL=snrg.bundle.WF5DULKL.js.map
+//# sourceMappingURL=snrg.bundle.DEQIF7D4.js.map
