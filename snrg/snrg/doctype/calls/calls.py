@@ -30,6 +30,10 @@ def get_values_for_mobile_no_and_company_name(doc):
 
 	if doctype == 'Secondary Customer':
 		fields.append('first_name')
+	
+	if doctype == "Employee":
+		fields[0] = "cell_number"
+		fields.append('employee_name')
 
 	document = frappe.get_list(doctype, filters, fields)
 
