@@ -2,12 +2,12 @@ frappe.provide('frappe.ui.form');
 
 class GSTQuickEntryForm extends frappe.ui.form.QuickEntryForm {
     constructor(...args) {
-                super(...args);
-                this.skip_redirect_on_error = true;
-                this.api_enabled =
-                    india_compliance.is_api_enabled() && gst_settings.autofill_party_info;
-            }
-        
+        super(...args);
+        this.skip_redirect_on_error = true;
+        this.api_enabled =
+            india_compliance.is_api_enabled() && gst_settings.autofill_party_info;
+    }
+
     async setup() {
         await frappe.model.with_doctype("Address");
         super.setup();
@@ -26,11 +26,11 @@ class GSTQuickEntryForm extends frappe.ui.form.QuickEntryForm {
                 fieldtype: "Section Break",
                 description: this.api_enabled
                     ? __(
-                            `When you enter a GSTIN, the permanent address linked to it is
+                          `When you enter a GSTIN, the permanent address linked to it is
                         autofilled.<br>
                         Change the {0} to autofill other addresses.`,
-                            [frappe.meta.get_label("Address", "pincode")]
-                        )
+                          [frappe.meta.get_label("Address", "pincode")]
+                      )
                     : "",
                 collapsible: 0,
             },
@@ -75,9 +75,8 @@ class GSTQuickEntryForm extends frappe.ui.form.QuickEntryForm {
     get_gstin_field() {
         return [
             {
-                ...frappe.meta.get_docfield(this.doctype, "custom_gstin"),
-                label: "GSTIN",
-                fieldname: "_custom_gstin",
+                ...frappe.meta.get_docfield(this.doctype, "gstin"),
+                fieldname: "_gstin",
                 fieldtype: "Autocomplete",
                 description: this.api_enabled ? get_gstin_description() : "",
                 ignore_validation: true,
@@ -85,6 +84,11 @@ class GSTQuickEntryForm extends frappe.ui.form.QuickEntryForm {
                     const d = this.dialog;
                     if (this.api_enabled && !gst_settings.sandbox_mode)
                         return autofill_fields(d);
+
+                    d.set_value(
+                        "gst_category",
+                        india_compliance.guess_gst_category(d.doc._gstin, d.doc.country)
+                    );
                 },
             },
         ];
@@ -93,109 +97,106 @@ class GSTQuickEntryForm extends frappe.ui.form.QuickEntryForm {
     update_doc() {
         const doc = super.update_doc();
         doc.pincode = doc._pincode;
-        doc.custom_gstin = doc._custom_gstin;
+        doc.gstin = doc._gstin;
         return doc;
     }
-        
 }
 
-class LeadQuickEntryForm extends GSTQuickEntryForm{
+class SecondaryCustomerQuickEntryForm extends GSTQuickEntryForm {
     get_address_fields() {
-                const fields = super.get_address_fields();
-        
-                for (const field of fields) {
-                    const fieldname =
-                        field.fieldname === "_pincode" ? "pincode" : field.fieldname;
-        
-                    if (!field.label && fieldname) {
-                        field.label = frappe.meta.get_label("Address", fieldname);
-                    }
-                }
-        
-                return fields;
-            }
-            get_mandatory_fields() {
-                var fields = [{
-                    label: __("First Name"),
-                    fieldname: "first_name",
-                    fieldtype: "Data",
-                    reqd: 1,
-                },
-                {
-                    label: __("Organisation Name"),
-                    fieldname: "company_name",
-                    fieldtype: "Data",
-                },
-                {
-                    label: __("Source"),
-                    fieldname: "source",
-                    fieldtype: "Link",
-                    option: "Lead Source",
-                }
+        const fields = super.get_address_fields();
 
-            ]
-        
-                return fields;
+        for (const field of fields) {
+            const fieldname =
+                field.fieldname === "_pincode" ? "pincode" : field.fieldname;
+
+            if (!field.label && fieldname) {
+                field.label = frappe.meta.get_label("Address", fieldname);
+            }
+        }
+
+        return fields;
     }
-        
-            render_dialog() {
-                this.mandatory = [
-                    ...this.get_gstin_field(),
-                    ...this.mandatory = this.get_mandatory_fields(),
-                    ...this.get_contact_fields(),
-                    ...this.get_address_fields(),
-                ];
-        
-                super.render_dialog();
-            }
-        
-            get_contact_fields() {
-                return [
-                    {
-                        label: __("Primary Contact Details"),
-                        fieldname: "primary_contact_section",
-                        fieldtype: "Section Break",
-                        collapsible: 0,
-                    },
-                    {
-                        label: __("Email ID"),
-                        fieldname: "_email_id",
-                        fieldtype: "Data",
-                        options: "Email",
-                    },
-                    {
-                        fieldtype: "Column Break",
-                    },
-                    {
-                        label: __("Mobile Number"),
-                        fieldname: "_mobile_no",
-                        fieldtype: "Data",
-                    },
-                ];
-            }
-        
-            update_doc() {
-                const doc = super.update_doc();
-                // to prevent clash with ERPNext
-                doc._address_line1 = doc.address_line1;
-                delete doc.address_line1;
-                // these fields were suffixed with _ to prevent them from being read only
-                doc.email_id = doc._email_id;
-                doc.mobile_no = doc._mobile_no;
-        
-                return doc;
-            }
-        
+
+    get_mandatory_fields(){
+        var fields = [{
+            label: __("First Name"),
+            fieldname: "first_name",
+            fieldtype: "Data",
+            reqd: 1,
+        },
+        {
+            label: __("Organisation Name"),
+            fieldname: "company_name",
+            fieldtype: "Data",
+            reqd: 1,
+        },
+        {
+            label: __("Source"),
+            fieldname: "source",
+            fieldtype: "Link",
+            option: "Lead Source",
+        }
+    ]
+    return fields;
+    }
+
+    render_dialog() {
+        this.mandatory = [
+            ...this.get_gstin_field(),
+            ...this.mandatory = this.get_mandatory_fields(),
+            ...this.get_contact_fields(),
+            ...this.get_address_fields(),
+        ];
+
+        super.render_dialog();
+    }
+
+    get_contact_fields() {
+        return [
+            {
+                label: __("Primary Contact Details"),
+                fieldname: "primary_contact_section",
+                fieldtype: "Section Break",
+                collapsible: 0,
+            },
+            {
+                label: __("Email ID"),
+                fieldname: "_email_id",
+                fieldtype: "Data",
+                options: "Email",
+            },
+            {
+                fieldtype: "Column Break",
+            },
+            {
+                label: __("Mobile Number"),
+                fieldname: "_mobile_no",
+                fieldtype: "Data",
+            },
+        ];
+    }
+
+    update_doc() {
+        const doc = super.update_doc();
+        // to prevent clash with ERPNext
+        doc._address_line1 = doc.address_line1;
+        delete doc.address_line1;
+        // these fields were suffixed with _ to prevent them from being read only
+        doc.email_id = doc._email_id;
+        doc.mobile_no = doc._mobile_no;
+
+        return doc;
+    }
 }
 
 
-
-frappe.ui.form.LeadQuickEntryForm = LeadQuickEntryForm;
+frappe.ui.form.SecondaryCustomerQuickEntryForm = SecondaryCustomerQuickEntryForm
 
 
 async function autofill_fields(dialog) {
-    const gstin = dialog.doc._custom_gstin;
-    const gstin_field = dialog.get_field("_custom_gstin");
+    const gstin = dialog.doc._gstin;
+    const gstin_field = dialog.get_field("_gstin");
 
     if (!gstin || gstin.length !== 15) {
         const pincode_field = dialog.fields_dict._pincode;
@@ -209,8 +210,9 @@ async function autofill_fields(dialog) {
     const gstin_info = await get_gstin_info(gstin);
     set_gstin_description(gstin_field, gstin_info.status);
     map_gstin_info(dialog.doc, gstin_info);
+
+    dialog.set_value('first_name', gstin_info.business_name)
     dialog.set_value('company_name', gstin_info.business_name)
-    console.log(gstin_info)
     dialog.refresh();
 
     setup_pincode_field(dialog, gstin_info);

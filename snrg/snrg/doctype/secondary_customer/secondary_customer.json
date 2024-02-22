@@ -1,0 +1,633 @@
+{
+ "actions": [],
+ "allow_events_in_timeline": 1,
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:company_name",
+ "creation": "2024-02-22 17:20:59.950561",
+ "default_view": "List",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "email_append_to": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "first_name",
+  "last_name",
+  "lead_name",
+  "company_name",
+  "p_name",
+  "primary_name",
+  "column_break_1",
+  "city",
+  "state",
+  "market_segment",
+  "competitors",
+  "gstin",
+  "gst_category",
+  "col_break123",
+  "lead_owner",
+  "source",
+  "status",
+  "customer",
+  "campaign_name",
+  "contact_info_tab",
+  "mobile_no",
+  "industry",
+  "column_break_20",
+  "whatsapp_no",
+  "request_type",
+  "column_break_16",
+  "email_id",
+  "qualification_tab",
+  "qualification_status",
+  "column_break_64",
+  "qualified_by",
+  "column_break_bzjv",
+  "qualified_on",
+  "address_section",
+  "address_html",
+  "column_break_38",
+  "country",
+  "column_break2",
+  "contact_html",
+  "other_info_tab",
+  "company",
+  "column_break_22",
+  "language",
+  "image",
+  "title",
+  "column_break_50",
+  "disabled",
+  "unsubscribed",
+  "blog_subscriber",
+  "activities_tab",
+  "open_activities_html",
+  "all_activities_section",
+  "all_activities_html",
+  "notes_tab",
+  "notes_html",
+  "notes",
+  "dashboard_tab",
+  "additional_tab",
+  "organization_section",
+  "naming_series",
+  "salutation",
+  "no_of_employees",
+  "job_title",
+  "gender",
+  "website",
+  "column_break_28",
+  "annual_revenue",
+  "middle_name",
+  "type",
+  "column_break_31",
+  "territory",
+  "phone_ext",
+  "phone",
+  "fax"
+ ],
+ "fields": [
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name",
+   "mandatory_depends_on": "eval: !(doc.company_name)"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "lead_name",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "label": "Full Name",
+   "oldfieldname": "lead_name",
+   "oldfieldtype": "Data",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "company_name",
+   "fieldtype": "Data",
+   "label": "Organization Name",
+   "mandatory_depends_on": "eval: !(doc.first_name)",
+   "oldfieldname": "company_name",
+   "oldfieldtype": "Data",
+   "unique": 1
+  },
+  {
+   "fetch_from": "primary_name.",
+   "fieldname": "p_name",
+   "fieldtype": "Link",
+   "label": "P Name",
+   "options": "Customer"
+  },
+  {
+   "fetch_from": "p_name.customer_name",
+   "fieldname": "primary_name",
+   "fieldtype": "Data",
+   "label": "Primary Name"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "City"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "State",
+   "options": "Andaman and Nicobar Islands\nAndhra Pradesh\nArunachal Pradesh\nAssam\nBihar\nChandigarh\nChhattisgarh\nDadra & Nagar Haveli and Daman & Diu\nDelhi\nGoa\nGujarat\nHaryana\nHimachal Pradesh\nJammu and Kashmir\nJharkhand\nKarnataka\nKerala\nLadakh\nLakshadweep\nMadhya Pradesh\nMaharashtra\nManipur\nMeghalaya\nMizoram\nNagaland\nOdisha\nPuducherry\nPunjab\nRajasthan\nSikkim\nTamil Nadu\nTelangana\nTripura\nUttar Pradesh\nUttarakhand\nWest Bengal"
+  },
+  {
+   "fieldname": "market_segment",
+   "fieldtype": "Link",
+   "label": "Market Segment",
+   "oldfieldname": "market_segment",
+   "oldfieldtype": "Select",
+   "options": "Market Segment"
+  },
+  {
+   "fieldname": "competitors",
+   "fieldtype": "Table MultiSelect",
+   "label": "Competitors",
+   "options": "Competitor Detail"
+  },
+  {
+   "fieldname": "col_break123",
+   "fieldtype": "Column Break",
+   "width": "50%"
+  },
+  {
+   "default": "__user",
+   "fieldname": "lead_owner",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Lead Owner",
+   "oldfieldname": "lead_owner",
+   "oldfieldtype": "Link",
+   "options": "User",
+   "search_index": 1
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Link",
+   "label": "Source",
+   "oldfieldname": "source",
+   "oldfieldtype": "Select",
+   "options": "Lead Source"
+  },
+  {
+   "default": "Lead",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "oldfieldname": "status",
+   "oldfieldtype": "Select",
+   "options": "Lead\nOpen\nReplied\nOpportunity\nQuotation\nLost Quotation\nInterested\nConverted\nDo Not Contact",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "depends_on": "eval:doc.source == 'Existing Customer'",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "From Customer",
+   "no_copy": 1,
+   "oldfieldname": "customer",
+   "oldfieldtype": "Link",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "campaign_name",
+   "fieldtype": "Link",
+   "label": "Campaign Name",
+   "oldfieldname": "campaign_name",
+   "oldfieldtype": "Link",
+   "options": "Campaign"
+  },
+  {
+   "fieldname": "contact_info_tab",
+   "fieldtype": "Section Break",
+   "label": "Contact Info"
+  },
+  {
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile No",
+   "oldfieldname": "mobile_no",
+   "oldfieldtype": "Data",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "industry",
+   "fieldtype": "Link",
+   "label": "Industry",
+   "oldfieldname": "industry",
+   "oldfieldtype": "Link",
+   "options": "Industry Type"
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "whatsapp_no",
+   "fieldtype": "Data",
+   "label": "WhatsApp",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "request_type",
+   "fieldtype": "Select",
+   "label": "Request Type",
+   "oldfieldname": "request_type",
+   "oldfieldtype": "Select",
+   "options": "\nProduct Enquiry\nRequest for Information\nSuggestions\nOther"
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email",
+   "oldfieldname": "email_id",
+   "oldfieldtype": "Data",
+   "options": "Email",
+   "search_index": 1
+  },
+  {
+   "fieldname": "qualification_tab",
+   "fieldtype": "Section Break",
+   "label": "Qualification"
+  },
+  {
+   "fieldname": "qualification_status",
+   "fieldtype": "Select",
+   "label": "Qualification Status",
+   "options": "Unqualified\nIn Process\nQualified"
+  },
+  {
+   "fieldname": "column_break_64",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "qualified_by",
+   "fieldtype": "Link",
+   "label": "Qualified By",
+   "options": "User"
+  },
+  {
+   "fieldname": "column_break_bzjv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "qualified_on",
+   "fieldtype": "Date",
+   "label": "Qualified on"
+  },
+  {
+   "fieldname": "address_section",
+   "fieldtype": "Section Break",
+   "label": "Address & Contacts"
+  },
+  {
+   "fieldname": "address_html",
+   "fieldtype": "HTML",
+   "label": "Address HTML",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_38",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "column_break2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contact_html",
+   "fieldtype": "HTML",
+   "label": "Contact HTML",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "other_info_tab",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "oldfieldname": "company",
+   "oldfieldtype": "Link",
+   "options": "Company",
+   "remember_last_selected_value": 1
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "language",
+   "fieldtype": "Link",
+   "label": "Print Language",
+   "options": "Language"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Image",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_50",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "default": "0",
+   "fieldname": "unsubscribed",
+   "fieldtype": "Check",
+   "label": "Unsubscribed"
+  },
+  {
+   "default": "0",
+   "fieldname": "blog_subscriber",
+   "fieldtype": "Check",
+   "label": "Blog Subscriber"
+  },
+  {
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "activities_tab",
+   "fieldtype": "Tab Break",
+   "label": "Activities"
+  },
+  {
+   "fieldname": "open_activities_html",
+   "fieldtype": "HTML",
+   "label": "Open Activities HTML"
+  },
+  {
+   "fieldname": "all_activities_section",
+   "fieldtype": "Section Break",
+   "label": "All Activities"
+  },
+  {
+   "fieldname": "all_activities_html",
+   "fieldtype": "HTML",
+   "label": "All Activities HTML"
+  },
+  {
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "notes_tab",
+   "fieldtype": "Tab Break",
+   "label": "Comments"
+  },
+  {
+   "fieldname": "notes_html",
+   "fieldtype": "HTML",
+   "label": "Notes HTML"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Notes",
+   "no_copy": 1,
+   "options": "CRM Note"
+  },
+  {
+   "fieldname": "dashboard_tab",
+   "fieldtype": "Tab Break",
+   "label": "Connections",
+   "show_dashboard": 1
+  },
+  {
+   "fieldname": "additional_tab",
+   "fieldtype": "Tab Break",
+   "label": "Additional"
+  },
+  {
+   "fieldname": "organization_section",
+   "fieldtype": "Section Break",
+   "label": "Organization"
+  },
+  {
+   "default": "SECCUST-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "no_copy": 1,
+   "oldfieldname": "naming_series",
+   "oldfieldtype": "Select",
+   "options": "SECCUST-.#####",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "salutation",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Salutation",
+   "options": "Salutation"
+  },
+  {
+   "fieldname": "no_of_employees",
+   "fieldtype": "Select",
+   "label": "No of Employees",
+   "options": "1-10\n11-50\n51-200\n201-500\n501-1000\n1000+"
+  },
+  {
+   "fieldname": "job_title",
+   "fieldtype": "Data",
+   "label": "Job Title"
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Link",
+   "label": "Gender",
+   "options": "Gender"
+  },
+  {
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "label": "Website",
+   "oldfieldname": "website",
+   "oldfieldtype": "Data"
+  },
+  {
+   "fieldname": "column_break_28",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "annual_revenue",
+   "fieldtype": "Currency",
+   "label": "Annual Revenue"
+  },
+  {
+   "fieldname": "middle_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Lead Type",
+   "oldfieldname": "type",
+   "oldfieldtype": "Select",
+   "options": "\nClient\nChannel Partner\nConsultant"
+  },
+  {
+   "fieldname": "column_break_31",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "territory",
+   "fieldtype": "Link",
+   "label": "Territory",
+   "oldfieldname": "territory",
+   "oldfieldtype": "Link",
+   "options": "Territory",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "phone_ext",
+   "fieldtype": "Data",
+   "label": "Phone Ext."
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone",
+   "oldfieldname": "contact_no",
+   "oldfieldtype": "Data",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "fax",
+   "fieldtype": "Data",
+   "label": "Fax",
+   "oldfieldname": "fax",
+   "oldfieldtype": "Data"
+  },
+  {
+   "fieldname": "gst_category",
+   "fieldtype": "Select",
+   "label": "GST Category",
+   "options": "Registered Regular\nRegistered Composition\nUnregistered\nSEZ\nOverseas\nDeemed Export\nUIN Holders\nTax Deductor"
+  },
+  {
+   "fieldname": "gstin",
+   "fieldtype": "Autocomplete",
+   "label": "GSTIN"
+  }
+ ],
+ "icon": "fa fa-user",
+ "image_field": "image",
+ "links": [],
+ "modified": "2024-02-22 18:32:13.299087",
+ "modified_by": "Administrator",
+ "module": "SNRG",
+ "name": "Secondary Customer",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager"
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User"
+  }
+ ],
+ "quick_entry": 1,
+ "search_fields": "lead_name,lead_owner,status",
+ "sender_field": "email_id",
+ "sender_name_field": "lead_name",
+ "show_name_in_global_search": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "subject_field": "title",
+ "title_field": "title"
+}
