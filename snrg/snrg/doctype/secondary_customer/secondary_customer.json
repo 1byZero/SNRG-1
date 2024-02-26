@@ -18,12 +18,12 @@
   "p_name",
   "primary_name",
   "column_break_1",
+  "gstin",
+  "gst_category",
   "city",
   "state",
   "market_segment",
   "competitors",
-  "gstin",
-  "gst_category",
   "col_break123",
   "lead_owner",
   "source",
@@ -45,11 +45,11 @@
   "column_break_bzjv",
   "qualified_on",
   "address_section",
-  "address_html",
+  "address_display",
   "column_break_38",
   "country",
   "column_break2",
-  "contact_html",
+  "contact_display",
   "other_info_tab",
   "company",
   "column_break_22",
@@ -309,12 +309,6 @@
    "label": "Address & Contacts"
   },
   {
-   "fieldname": "address_html",
-   "fieldtype": "HTML",
-   "label": "Address HTML",
-   "read_only": 1
-  },
-  {
    "fieldname": "column_break_38",
    "fieldtype": "Column Break"
   },
@@ -327,12 +321,6 @@
   {
    "fieldname": "column_break2",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "contact_html",
-   "fieldtype": "HTML",
-   "label": "Contact HTML",
-   "read_only": 1
   },
   {
    "collapsible": 1,
@@ -562,12 +550,24 @@
    "fieldname": "gstin",
    "fieldtype": "Autocomplete",
    "label": "GSTIN"
+  },
+  {
+   "fieldname": "address_display",
+   "fieldtype": "Small Text",
+   "label": "Address Display",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contact_display",
+   "fieldtype": "Small Text",
+   "label": "Contact Display",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
- "modified": "2024-02-22 18:32:13.299087",
+ "modified": "2024-02-26 18:57:36.907380",
  "modified_by": "Administrator",
  "module": "SNRG",
  "name": "Secondary Customer",

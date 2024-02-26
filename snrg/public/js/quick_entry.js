@@ -94,6 +94,7 @@ class GSTQuickEntryForm extends frappe.ui.form.QuickEntryForm {
         const doc = super.update_doc();
         doc.pincode = doc._pincode;
         doc.custom_gstin = doc._custom_gstin;
+        doc.address_line1 = doc.address_line1;
         return doc;
     }
         
@@ -178,7 +179,7 @@ class LeadQuickEntryForm extends GSTQuickEntryForm{
                 const doc = super.update_doc();
                 // to prevent clash with ERPNext
                 doc._address_line1 = doc.address_line1;
-                delete doc.address_line1;
+                // delete doc.address_line1;
                 // these fields were suffixed with _ to prevent them from being read only
                 doc.email_id = doc._email_id;
                 doc.mobile_no = doc._mobile_no;
@@ -210,7 +211,6 @@ async function autofill_fields(dialog) {
     set_gstin_description(gstin_field, gstin_info.status);
     map_gstin_info(dialog.doc, gstin_info);
     dialog.set_value('company_name', gstin_info.business_name)
-    console.log(gstin_info)
     dialog.refresh();
 
     setup_pincode_field(dialog, gstin_info);

@@ -105,6 +105,7 @@
       const doc = super.update_doc();
       doc.pincode = doc._pincode;
       doc.custom_gstin = doc._custom_gstin;
+      doc.address_line1 = doc.address_line1;
       return doc;
     }
   };
@@ -177,7 +178,6 @@
     update_doc() {
       const doc = super.update_doc();
       doc._address_line1 = doc.address_line1;
-      delete doc.address_line1;
       doc.email_id = doc._email_id;
       doc.mobile_no = doc._mobile_no;
       return doc;
@@ -198,7 +198,6 @@
     set_gstin_description(gstin_field, gstin_info.status);
     map_gstin_info(dialog.doc, gstin_info);
     dialog.set_value("company_name", gstin_info.business_name);
-    console.log(gstin_info);
     dialog.refresh();
     setup_pincode_field(dialog, gstin_info);
   }
@@ -433,7 +432,6 @@
     update_doc() {
       const doc = super.update_doc();
       doc._address_line1 = doc.address_line1;
-      delete doc.address_line1;
       doc.email_id = doc._email_id;
       doc.mobile_no = doc._mobile_no;
       return doc;
@@ -492,18 +490,18 @@
   function map_gstin_info2(doc, gstin_info) {
     if (!gstin_info)
       return;
-    update_lead_info2(doc, gstin_info);
+    update_secondary_customer_info(doc, gstin_info);
     if (gstin_info.permanent_address) {
       update_address_info2(doc, gstin_info.permanent_address);
     }
   }
-  function update_lead_info2(doc, gstin_info) {
+  function update_secondary_customer_info(doc, gstin_info) {
     doc.gstin = doc._custom_gstin;
     doc.gst_category = gstin_info.gst_category;
     if (!in_list(frappe.boot.gst_party_types, doc.doctype))
       return;
-    const lead_name_field = `${doc.doctype.toLowerCase()}_name`;
-    doc[lead_name_field] = gstin_info.business_name;
+    const secondary_customer_name_field = `${doc.doctype.toLowerCase()}_name`;
+    doc[secondary_customer_name_field] = gstin_info.business_name;
   }
   function update_address_info2(doc, address) {
     if (!address)
@@ -522,10 +520,52 @@
   }
   function get_gstin_description2() {
     if (!gst_settings.sandbox_mode) {
-      return __("Autofill lead information by entering their GSTIN");
+      return __("Autofill secondary_customer information by entering their GSTIN");
     }
     return __("Autofill is not supported in sandbox mode");
   }
+  frappe.ui.form.on("Secondary Customer", {
+    gstin: function(frm) {
+      const gstin = frm.doc.gstin;
+      const gstin_field = frm.get_field("gstin");
+      frappe.call({
+        method: "india_compliance.gst_india.doctype.gstin.gstin.get_gstin_status",
+        args: { gstin },
+        callback: (r) => {
+          const status = r.message.status;
+          gstin_field.set_description(india_compliance.get_gstin_status_desc(status));
+        }
+      });
+    },
+    onload_post_render(frm) {
+      if (!frm.doc.address_display && !frm.is_new()) {
+        frappe.call({
+          method: "snrg.doc_events.get_address",
+          args: {
+            "docname": frm.doc.name
+          },
+          callback: function(r) {
+            if (r.message) {
+              frm.set_value("address_display", r.message);
+            }
+          }
+        });
+      }
+      if (!frm.doc.contact_display && !frm.is_new()) {
+        frappe.call({
+          method: "snrg.doc_events.get_contact",
+          args: {
+            "docname": frm.doc.name
+          },
+          callback: function(r) {
+            if (r.message) {
+              frm.set_value("contact_display", r.message);
+            }
+          }
+        });
+      }
+    }
+  });
 
   // ../snrg/snrg/public/js/lead.js
   frappe.ui.form.on("Lead", {
@@ -564,4 +604,4 @@
     });
   };
 })();
-//# sourceMappingURL=snrg.bundle.VRKVEB3D.js.map
+//# sourceMappingURL=snrg.bundle.3OBSBOAR.js.map

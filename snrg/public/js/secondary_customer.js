@@ -181,7 +181,6 @@ class SecondaryCustomerQuickEntryForm extends GSTQuickEntryForm {
         const doc = super.update_doc();
         // to prevent clash with ERPNext
         doc._address_line1 = doc.address_line1;
-        delete doc.address_line1;
         // these fields were suffixed with _ to prevent them from being read only
         doc.email_id = doc._email_id;
         doc.mobile_no = doc._mobile_no;
@@ -258,21 +257,21 @@ function get_gstin_info(gstin, throw_error = true) {
 function map_gstin_info(doc, gstin_info) {
     if (!gstin_info) return;
 
-    update_lead_info(doc, gstin_info);
+    update_secondary_customer_info(doc, gstin_info);
 
     if (gstin_info.permanent_address) {
         update_address_info(doc, gstin_info.permanent_address);
     }
 }
 
-function update_lead_info(doc, gstin_info) {
+function update_secondary_customer_info(doc, gstin_info) {
     doc.gstin = doc._custom_gstin;
     doc.gst_category = gstin_info.gst_category;
 
     if (!in_list(frappe.boot.gst_party_types, doc.doctype)) return;
 
-    const lead_name_field = `${doc.doctype.toLowerCase()}_name`;
-    doc[lead_name_field] = gstin_info.business_name;
+    const secondary_customer_name_field = `${doc.doctype.toLowerCase()}_name`;
+    doc[secondary_customer_name_field] = gstin_info.business_name;
 }
 
 function update_address_info(doc, address) {
@@ -295,8 +294,57 @@ function autofill_address(doc, { all_addresses }) {
 
 function get_gstin_description() {
     if (!gst_settings.sandbox_mode) {
-        return __("Autofill lead information by entering their GSTIN");
+        return __("Autofill secondary_customer information by entering their GSTIN");
     }
 
     return __("Autofill is not supported in sandbox mode");
 }
+
+
+
+frappe.ui.form.on("Secondary Customer", {
+    gstin:function(frm) {
+
+        const gstin = frm.doc.gstin
+        const gstin_field = frm.get_field("gstin")
+
+        frappe.call({
+            method: "india_compliance.gst_india.doctype.gstin.gstin.get_gstin_status",
+            args: {gstin},
+            callback:(r) => {
+                const  status = r.message.status
+                gstin_field.set_description(india_compliance.get_gstin_status_desc(status));
+            }
+        })
+    },
+    onload_post_render(frm) {
+        
+        if(!frm.doc.address_display && !frm.is_new()){
+            frappe.call({
+                method: "snrg.doc_events.get_address",
+                args: {
+                    "docname":frm.doc.name
+                },
+                callback: function(r) {
+                    if(r.message){
+                        frm.set_value("address_display",r.message)
+                    }
+                }
+            })
+        }
+
+        if(!frm.doc.contact_display && !frm.is_new()){
+            frappe.call({
+                method: "snrg.doc_events.get_contact",
+                args: {
+                    "docname": frm.doc.name
+                },
+                callback: function(r) {
+                    if(r.message) {
+                        frm.set_value("contact_display", r.message)
+                    }
+                },
+            })
+        }
+    },
+})

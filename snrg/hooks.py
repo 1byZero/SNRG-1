@@ -139,9 +139,12 @@ doc_events = {
     "Lead": {
         "before_save": "snrg.snrg.doctype.counter.counter.insert_or_update_document",
         "before_save": "snrg.doc_events.validate_gstin",
+        "on_update": "snrg.doc_events.create_address"
     },
     "Secondary Customer": {
         "before_save": "snrg.snrg.doctype.counter.counter.insert_or_update_document",
+        "before_save": "snrg.doc_events.validate_gstin",
+        "on_update": "snrg.doc_events.create_address_and_contact"
     },
     "Supplier": {
         "before_save": "snrg.doc_events.validate_gstin",
