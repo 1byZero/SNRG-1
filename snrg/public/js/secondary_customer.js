@@ -180,7 +180,7 @@ class SecondaryCustomerQuickEntryForm extends GSTQuickEntryForm {
     update_doc() {
         const doc = super.update_doc();
         // to prevent clash with ERPNext
-        doc._address_line1 = doc.address_line1;
+        // doc._address_line1 = doc.address_line1;
         // these fields were suffixed with _ to prevent them from being read only
         doc.email_id = doc._email_id;
         doc.mobile_no = doc._mobile_no;
