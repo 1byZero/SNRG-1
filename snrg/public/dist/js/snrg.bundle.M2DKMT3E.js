@@ -359,6 +359,7 @@
       const doc = super.update_doc();
       doc.pincode = doc._pincode;
       doc.gstin = doc._gstin;
+      doc.address_line1 = doc.address_line1;
       return doc;
     }
   };
@@ -604,4 +605,4 @@
     });
   };
 })();
-//# sourceMappingURL=snrg.bundle.3OBSBOAR.js.map
+//# sourceMappingURL=snrg.bundle.M2DKMT3E.js.map

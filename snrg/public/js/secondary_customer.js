@@ -98,6 +98,7 @@ class GSTQuickEntryForm extends frappe.ui.form.QuickEntryForm {
         const doc = super.update_doc();
         doc.pincode = doc._pincode;
         doc.gstin = doc._gstin;
+        doc.address_line1 = doc.address_line1;
         return doc;
     }
 }
