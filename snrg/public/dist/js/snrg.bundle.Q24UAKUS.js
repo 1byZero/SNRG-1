@@ -450,10 +450,10 @@
       return;
     }
     const gstin_info = await get_gstin_info2(gstin);
+    console.log(gstin_info);
     set_gstin_description2(gstin_field, gstin_info.status);
     map_gstin_info2(dialog.doc, gstin_info);
     dialog.set_value("first_name", gstin_info.business_name);
-    dialog.set_value("company_name", gstin_info.business_name);
     dialog.refresh();
     setup_pincode_field2(dialog, gstin_info);
   }
@@ -605,4 +605,4 @@
     });
   };
 })();
-//# sourceMappingURL=snrg.bundle.M2DKMT3E.js.map
+//# sourceMappingURL=snrg.bundle.Q24UAKUS.js.map

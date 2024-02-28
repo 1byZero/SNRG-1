@@ -208,11 +208,11 @@ async function autofill_fields(dialog) {
     }
 
     const gstin_info = await get_gstin_info(gstin);
+    console.log(gstin_info);
     set_gstin_description(gstin_field, gstin_info.status);
     map_gstin_info(dialog.doc, gstin_info);
 
     dialog.set_value('first_name', gstin_info.business_name)
-    dialog.set_value('company_name', gstin_info.business_name)
     dialog.refresh();
 
     setup_pincode_field(dialog, gstin_info);
