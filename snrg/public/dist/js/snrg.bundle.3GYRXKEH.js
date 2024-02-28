@@ -195,6 +195,8 @@
       return;
     }
     const gstin_info = await get_gstin_info(gstin);
+    console.log("gstininfo====================", gstin_info);
+    console.log("gstin=========================================================", gstin);
     set_gstin_description(gstin_field, gstin_info.status);
     map_gstin_info(dialog.doc, gstin_info);
     dialog.set_value("company_name", gstin_info.business_name);
@@ -605,4 +607,4 @@
     });
   };
 })();
-//# sourceMappingURL=snrg.bundle.Q24UAKUS.js.map
+//# sourceMappingURL=snrg.bundle.3GYRXKEH.js.map
