@@ -195,8 +195,6 @@
       return;
     }
     const gstin_info = await get_gstin_info(gstin);
-    console.log("gstininfo====================", gstin_info);
-    console.log("gstin=========================================================", gstin);
     set_gstin_description(gstin_field, gstin_info.status);
     map_gstin_info(dialog.doc, gstin_info);
     dialog.set_value("company_name", gstin_info.business_name);
@@ -391,6 +389,11 @@
           reqd: 1
         },
         {
+          label: __("GST Category"),
+          fieldname: "gst_category",
+          fieldtype: "Autocomplete"
+        },
+        {
           label: __("Source"),
           fieldname: "source",
           fieldtype: "Link",
@@ -452,10 +455,10 @@
       return;
     }
     const gstin_info = await get_gstin_info2(gstin);
-    console.log(gstin_info);
     set_gstin_description2(gstin_field, gstin_info.status);
     map_gstin_info2(dialog.doc, gstin_info);
-    dialog.set_value("first_name", gstin_info.business_name);
+    dialog.set_value("company_name", gstin_info.business_name);
+    dialog.set_value("gst_category", gstin_info.gst_category);
     dialog.refresh();
     setup_pincode_field2(dialog, gstin_info);
   }
@@ -527,48 +530,6 @@
     }
     return __("Autofill is not supported in sandbox mode");
   }
-  frappe.ui.form.on("Secondary Customer", {
-    gstin: function(frm) {
-      const gstin = frm.doc.gstin;
-      const gstin_field = frm.get_field("gstin");
-      frappe.call({
-        method: "india_compliance.gst_india.doctype.gstin.gstin.get_gstin_status",
-        args: { gstin },
-        callback: (r) => {
-          const status = r.message.status;
-          gstin_field.set_description(india_compliance.get_gstin_status_desc(status));
-        }
-      });
-    },
-    onload_post_render(frm) {
-      if (!frm.doc.address_display && !frm.is_new()) {
-        frappe.call({
-          method: "snrg.doc_events.get_address",
-          args: {
-            "docname": frm.doc.name
-          },
-          callback: function(r) {
-            if (r.message) {
-              frm.set_value("address_display", r.message);
-            }
-          }
-        });
-      }
-      if (!frm.doc.contact_display && !frm.is_new()) {
-        frappe.call({
-          method: "snrg.doc_events.get_contact",
-          args: {
-            "docname": frm.doc.name
-          },
-          callback: function(r) {
-            if (r.message) {
-              frm.set_value("contact_display", r.message);
-            }
-          }
-        });
-      }
-    }
-  });
 
   // ../snrg/snrg/public/js/lead.js
   frappe.ui.form.on("Lead", {
@@ -607,4 +568,4 @@
     });
   };
 })();
-//# sourceMappingURL=snrg.bundle.3GYRXKEH.js.map
+//# sourceMappingURL=snrg.bundle.M6QSNGGG.js.map

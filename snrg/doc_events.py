@@ -111,6 +111,7 @@ def create_address(self, method):
             "state": self.get("state"),
             "pincode": self.get("pincode"),
             "country": self.get("country"),
+			"is_primary_address": 1,
             "links": [{"link_doctype": self.get("doctype"), "link_name": self.get("name")}]
         })
 
@@ -129,6 +130,7 @@ def create_address_and_contact(self, method):
             "state": self.get("state"),
             "pincode": self.get("pincode"),
             "country": self.get("country"),
+			"is_primary_address": 1,
             "links": [{"link_doctype": self.get("doctype"), "link_name": self.get("name")}]
         })
 
