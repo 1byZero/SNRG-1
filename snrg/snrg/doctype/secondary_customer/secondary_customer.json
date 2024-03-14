@@ -119,13 +119,6 @@
    "unique": 1
   },
   {
-   "fetch_from": "primary_name.",
-   "fieldname": "p_name",
-   "fieldtype": "Link",
-   "label": "P Name",
-   "options": "Customer"
-  },
-  {
    "fetch_from": "p_name.customer_name",
    "fieldname": "primary_name",
    "fieldtype": "Data",
@@ -562,12 +555,18 @@
    "fieldtype": "Small Text",
    "label": "Contact Display",
    "read_only": 1
+  },
+  {
+   "fieldname": "p_name",
+   "fieldtype": "Link",
+   "label": "Primary Code",
+   "options": "Customer"
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
- "modified": "2024-02-26 18:57:36.907380",
+ "modified": "2024-03-14 12:43:00.559822",
  "modified_by": "Administrator",
  "module": "SNRG",
  "name": "Secondary Customer",
