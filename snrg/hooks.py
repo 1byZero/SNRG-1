@@ -31,6 +31,8 @@ app_include_js = "snrg.bundle.js"
 
 # include js in doctype views
 doctype_js = {"Lead" : "public/js/lead.js"}
+doctype_js = {"Quotation" : "public/js/quotation.js"}
+doctype_js = {"Sales Order" : "public/js/sales_order.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
