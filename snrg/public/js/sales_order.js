@@ -6,6 +6,9 @@ frappe.ui.form.on("Sales Order", {
             },
         });
     },
+    refresh(frm) {
+        frm.set_value("dispatch_address_name", frm.doc.company_address)
+    },
     company_address: function(frm) {
         frm.set_value("dispatch_address_name",frm.doc.company_address)
     }

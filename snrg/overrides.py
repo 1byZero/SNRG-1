@@ -12,7 +12,6 @@ from erpnext.setup.doctype.item_group.item_group import get_item_group_defaults
 
 @frappe.whitelist()
 def make_sales_order(source_name: str, target_doc=None):
-	frappe.msgprint("Overrides")
 	if not frappe.db.get_singles_value(
 		"Selling Settings", "allow_sales_order_creation_for_expired_quotation"
 	):
@@ -124,7 +123,6 @@ def _make_sales_order(source_name, target_doc=None, customer_group=None, ignore_
 
 @frappe.whitelist()
 def make_sales_invoice(source_name, target_doc=None, ignore_permissions=False):
-	frappe.msgprint("overrides")
 	def postprocess(source, target):
 		set_missing_values(source, target)
 		# Get the advance paid Journal Entries in Sales Invoice Advance
