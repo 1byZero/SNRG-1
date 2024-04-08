@@ -30,9 +30,11 @@ app_include_js = "snrg.bundle.js"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"Lead" : "public/js/lead.js"}
-doctype_js = {"Quotation" : "public/js/quotation.js"}
-doctype_js = {"Sales Order" : "public/js/sales_order.js"}
+doctype_js = {
+            "Lead" : "public/js/lead.js",
+            "Quotation" : "public/js/quotation.js",
+            "Sales Order" : "public/js/sales_order.js"
+        }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -121,6 +123,9 @@ doctype_js = {"Sales Order" : "public/js/sales_order.js"}
 # override_doctype_class = {
 # 	"ToDo": "custom_app.overrides.CustomToDo"
 # }
+# override_doctype_class = {
+# 	"Quotation": "snrg.overrides.CustomQuotation"
+# }
 
 # Document Events
 # ---------------
@@ -185,6 +190,12 @@ doc_events = {
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "snrg.event.get_events"
 # }
+
+override_whitelisted_methods = {
+	"erpnext.selling.doctype.quotation.quotation.make_sales_order": "snrg.overrides.make_sales_order",
+    "erpnext.selling.doctype.sales_order.sales_order.make_sales_invoice": "snrg.overrides.make_sales_invoice"
+}
+
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
