@@ -27,7 +27,7 @@ def make_sales_order(source_name: str, target_doc=None):
 
 
 def _make_sales_order(source_name, target_doc=None, customer_group=None, ignore_permissions=False):
-	customer = _make_customer(source_name, ignore_permissions, customer_group)
+	customer = _make_customer(source_name, ignore_permissions)
 	ordered_items = frappe._dict(
 		frappe.db.get_all(
 			"Sales Order Item",
